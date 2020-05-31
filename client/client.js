@@ -1,13 +1,13 @@
 //const form = document.querySelector('form'); // grabbing an element on the page
 // why queryselector, just convenient - look into others like on click
-const submission = document.querySelector('submission');
-const search = document.querySelector('search');
+const submission = document.querySelector('#submission');
+const search = document.querySelector('#search');
 const API_URL = 'http://localhost:5000/mews';
 const mewsElement = document.querySelector('.mews'); //defined as a class of mews in index.html
 
 listAllMews();
 
-form.addEventListener('submit', (event) => {
+submission.addEventListener('submit', (event) => {
     event.preventDefault();
     const formDataSubmission = new FormData(submission);
     const name = formDataSubmission.get('name');
@@ -26,14 +26,13 @@ form.addEventListener('submit', (event) => {
       }
     }).then(response => response.json())  
       .then(createdMew => {
-        form.reset();
+        submission.reset();
         listAllMews();
     });
 });
 
-element.getElementById("search").addEventListener('submit', (event) => {
+search.addEventListener('submit', (event) => {
     event.preventDefault();
-    const search = document.getElementById('search');
     const formData = new FormData(search);
     const search = formData.get('search');
 
@@ -45,16 +44,15 @@ element.getElementById("search").addEventListener('submit', (event) => {
         }
     }).then(response => response.json())  
       .then(searchInput => {
-      form.reset();
+      search.reset();
       console.log(searchInput);
       
   });
-    
 });
 
 //function searchAllMews(searchInput){
 
-}
+// }
 
 function listAllMews(){ //making a get req
     mewsElement.innerHTML = ''; //removes set of html dom elements WHY DOES THIS WORK
