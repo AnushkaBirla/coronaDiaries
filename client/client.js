@@ -1,4 +1,4 @@
-console.log("hello")
+console.log("hello");
 const form = document.querySelector('form'); // grabbing an element on the page
 // why queryselector, just convenient - look into others like on click
 const API_URL = 'http://localhost:5000/mews';
@@ -40,18 +40,24 @@ function listAllMews(){ //making a get req
             mews.reverse(); //reverse order - most recent tweets at the top
             mews.forEach(mew => { //for every element in this array, want to add it to page
                 const div = document.createElement('div');
-                const header = document.createElement('h3');
+                div.className = "post-preview";
+
+                const header = document.createElement('h2');
+                header.className = "post-title";
                 header.textContent = mew.name;
 
                 const contents = document.createElement('p');
+                contents.className = "post-subtitle";
                 contents.textContent = mew.content;
 
                 const date = document.createElement('small');
+                date.className = "post-meta";
                 date.textContent = new Date(mew.created);
 
                 div.appendChild(header); //each div has children of header n contents
                 div.appendChild(contents);
                 div.appendChild(date);
+                div.appendChild(document.createElement('hr'));
                 
                 mewsElement.appendChild(div);
 
