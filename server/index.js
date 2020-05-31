@@ -43,7 +43,7 @@ function isValidMew(mew) {
 }
 
 app.post('/mews', (req, res) => { // client to server this is what happens when an incoming post req happens to the server
-    if (isValidMew(req.body)){
+    if (isValidMew(req.body)){ 
         //insert into DB
         const mew = {
             name: filter.clean(req.body.name.toString().trim()),
