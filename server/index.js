@@ -7,31 +7,25 @@ const Filter = require('bad-words');
 const app = express();
 
 const db = monk(process.env.MONGO_URI || 'localhost/meower');
-const mews = db.get('mews'); //collection
-const filter = new Filter();
+const coronaPostList = db.get('coronaPostList'); //collection
+const filter = new Filter(); //bad mouth npm module, prevents bad words as input
 
 app.use(cors()); //adds cors as a middleware, will add cors headers to reqs coming to server
 app.use(express.json()); //json body parser middlware
 
-app.get('/', (req, res) => { // server to client
-    res.json({
-      message: 'This TEST is the response'
-    }); 
-  });
-
-app.get('/mews', (req, res) => { // db storage list
-    mews
+app.get('/coronaPostList', (req, res) => { // db storage list
+    coronaPostList
         .find()
-        .then(mews => {
-            res.json(mews)
+        .then(coronaPostList => {
+            res.json(coronaPostList)
         });
   });
 
   // add error check
-  app.get('/mews/search', (req, res) => {
+  app.get('/coronaPostList/search', (req, res) => {
       let input = {content: req.query.queryString}
       console.log(input);
-      mews
+      coronaPostList
         .find(input)
         .then(searchResults => {
             console.log(searchResults);
@@ -39,25 +33,20 @@ app.get('/mews', (req, res) => { // db storage list
         });
   });
 
-function isValidMew(mew) {
-    return mew.name && mew.name.toString().trim()  !== '' && 
-    mew.content && mew.content.toString().trim() !== '';
-    created: new Date()
-}
 
-app.post('/mews', (req, res) => { // client to server this is what happens when an incoming post req happens to the server
-    if (isValidMew(req.body)){ 
+app.post('/coronaPostList', (req, res) => { // client to server this is what happens when an incoming post req happens to the server
+    if (isValidCoronaPost(req.body)){ 
         //insert into DB
-        const mew = {
+        const coronaPost = {
             name: filter.clean(req.body.name.toString().trim()),
             content: filter.clean(req.body.content.toString().trim()),
             created: new Date()
         };
 
-        mews
-           .insert(mew)
-           .then(createdMew => {
-             res.json(createdMew);
+        coronaPostList
+           .insert(coronaPost)
+           .then(createdCoronaPost => {
+             res.json(createdCoronaPost);
            });
     } else {
         res.status(422);
@@ -66,6 +55,12 @@ app.post('/mews', (req, res) => { // client to server this is what happens when 
         });
     }
   });
+
+function isValidCoronaPost(coronaPost) {
+    return coronaPost.name && coronaPost.name.toString().trim()  !== '' && 
+    coronaPost.content && coronaPost.content.toString().trim() !== '';
+    created: new Date()
+}
 
 app.listen(5000, () => {
     console.log('Listening on http://localhost:5000');

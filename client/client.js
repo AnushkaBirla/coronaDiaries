@@ -2,11 +2,11 @@
 // why queryselector, just convenient - look into others like on click
 const submission = document.querySelector('#submission');
 const search = document.querySelector('#search');
-const API_URL = 'http://localhost:5000/mews';
-const API_URL_SEARCH = 'http://localhost:5000/mews/search';
-const mewsElement = document.querySelector('.mews'); //defined as a class of mews in index.html
+const API_URL = 'http://localhost:5000/coronaPostList';
+const API_URL_SEARCH = 'http://localhost:5000/coronaPostList/search';
+const coronaPostListElement = document.querySelector('.coronaPostList'); //defined as a class of coronaPostList in index.html
 
-listAllMews();
+listAllcoronaPostList();
 
 submission.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -14,21 +14,21 @@ submission.addEventListener('submit', (event) => {
     const name = formDataSubmission.get('name');
     const content = formDataSubmission.get('content');
 
-    const mew = { //change name to submission object
+    const coronaPost = { // named CoronaPost to keep distinct from post requests & avoid confusion
         name,
         content
     };
 
     fetch(API_URL, { //posting to server, like $POST in jquery
       method: 'POST',
-      body: JSON.stringify(mew), //turning a js object into smthn the server can parse and understand
+      body: JSON.stringify(coronaPost), //turning a js object into something the server can parse and understand
       headers: {
         'content-type': 'application/json'
       }
     }).then(response => response.json())  
-      .then(createdMew => {
+      .then(createdCoronaPost => {
         submission.reset();
-        listAllMews();
+        listAllcoronaPostList();
     });
 });
 
@@ -39,75 +39,73 @@ search.addEventListener('submit', (event) => {
 
     let params = `?queryString=${searchParameter}`;
     searchURL = API_URL_SEARCH + params;
-    console.log (searchURL);
-    //add search input to
+
     fetch(searchURL, {
         method: 'GET',
         headers: {
             'content-type': 'application/json'
         }
     }).then(response => response.json())
-      .then(mews => {
-
-        mewsElement.innerHTML = ''; //removes set of html dom elements WHY DOES THIS WORK
-        mews.reverse(); //reverse order - most recent tweets at the top
-        mews.forEach(mew => { //for every element in this array, want to add it to page
+      .then(coronaPostList => {
+        coronaPostListElement.innerHTML = ''; //removes set of html dom elements WHY DOES THIS WORK
+        coronaPostList.reverse(); //reverse order - most recent tweets at the top
+        coronaPostList.forEach(coronaPost => { //for every element in this array, want to add it to page
             const div = document.createElement('div');
             div.className = "post-preview";
 
             const header = document.createElement('h2');
             header.className = "post-title";
-            header.textContent = mew.name;
+            header.textContent = coronaPost.name;
 
             const contents = document.createElement('p');
             contents.className = "post-subtitle";
-            contents.textContent = mew.content;
+            contents.textContent = coronaPost.content;
 
             const date = document.createElement('small');
             date.className = "post-meta";
-            date.textContent = new Date(mew.created);
+            date.textContent = new Date(coronaPost.created);
 
             div.appendChild(header); //each div has children of header n contents
             div.appendChild(contents);
             div.appendChild(date);
             div.appendChild(document.createElement('hr'));
             
-            mewsElement.appendChild(div);
+            coronaPostListElement.appendChild(div);
       search.reset();
       
   });
 });
 });
 
-function listAllMews(){ //making a get req
-    mewsElement.innerHTML = ''; //removes set of html dom elements WHY DOES THIS WORK
+function listAllcoronaPostList(){ //making a get req
+    coronaPostListElement.innerHTML = ''; //removes set of html dom elements WHY DOES THIS WORK
     fetch(API_URL) //lel whats going on here - watch vid, calling app.get
         .then(response => response.json())
-        .then(mews => {
+        .then(coronaPostList => {
 
-            mews.reverse(); //reverse order - most recent tweets at the top
-            mews.forEach(mew => { //for every element in this array, want to add it to page
+            coronaPostList.reverse(); //reverse order - most recent tweets at the top
+            coronaPostList.forEach(coronaPost => { //for every element in this array, want to add it to page
                 const div = document.createElement('div');
                 div.className = "post-preview";
 
                 const header = document.createElement('h2');
                 header.className = "post-title";
-                header.textContent = mew.name;
+                header.textContent = coronaPost.name;
 
                 const contents = document.createElement('p');
                 contents.className = "post-subtitle";
-                contents.textContent = mew.content;
+                contents.textContent = coronaPost.content;
 
                 const date = document.createElement('small');
                 date.className = "post-meta";
-                date.textContent = new Date(mew.created);
+                date.textContent = new Date(coronaPost.created);
 
                 div.appendChild(header); //each div has children of header n contents
                 div.appendChild(contents);
                 div.appendChild(date);
                 div.appendChild(document.createElement('hr'));
                 
-                mewsElement.appendChild(div);
+                coronaPostListElement.appendChild(div);
 
             })
         });
