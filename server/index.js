@@ -10,15 +10,6 @@ const db = monk(process.env.MONGO_URI || 'localhost/meower');
 const mews = db.get('mews'); //collection
 const filter = new Filter();
 
-// const MongoClient = require('mongodb').MongoClient;
-// const uri = "mongodb+srv://kay:myRealPassword@cluster0.mongodb.net/test?w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//  // perform actions on the collection object
-//   client.close();
-// });
-
 app.use(cors()); //adds cors as a middleware, will add cors headers to reqs coming to server
 app.use(express.json()); //json body parser middlware
 
@@ -36,13 +27,14 @@ app.get('/mews', (req, res) => { // db storage list
         });
   });
 
-  
+  // add error check
   app.get('/mews/search', (req, res) => {
       let input = {content: req.query.queryString}
       console.log(input);
       mews
         .find(input)
         .then(searchResults => {
+            console.log(searchResults);
             res.json(searchResults)
         });
   });

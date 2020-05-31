@@ -46,23 +46,45 @@ search.addEventListener('submit', (event) => {
         headers: {
             'content-type': 'application/json'
         }
-    }).then(response => response.json())  
-      .then(searchParameter => {
+    }).then(response => response.json())
+      .then(mews => {
+
+        mewsElement.innerHTML = ''; //removes set of html dom elements WHY DOES THIS WORK
+        mews.reverse(); //reverse order - most recent tweets at the top
+        mews.forEach(mew => { //for every element in this array, want to add it to page
+            const div = document.createElement('div');
+            div.className = "post-preview";
+
+            const header = document.createElement('h2');
+            header.className = "post-title";
+            header.textContent = mew.name;
+
+            const contents = document.createElement('p');
+            contents.className = "post-subtitle";
+            contents.textContent = mew.content;
+
+            const date = document.createElement('small');
+            date.className = "post-meta";
+            date.textContent = new Date(mew.created);
+
+            div.appendChild(header); //each div has children of header n contents
+            div.appendChild(contents);
+            div.appendChild(date);
+            div.appendChild(document.createElement('hr'));
+            
+            mewsElement.appendChild(div);
       search.reset();
-      console.log(searchParameter);
       
   });
 });
-
-//function searchAllMews(searchInput){
-
-// }
+});
 
 function listAllMews(){ //making a get req
     mewsElement.innerHTML = ''; //removes set of html dom elements WHY DOES THIS WORK
     fetch(API_URL) //lel whats going on here - watch vid, calling app.get
         .then(response => response.json())
         .then(mews => {
+
             mews.reverse(); //reverse order - most recent tweets at the top
             mews.forEach(mew => { //for every element in this array, want to add it to page
                 const div = document.createElement('div');
