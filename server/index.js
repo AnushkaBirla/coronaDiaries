@@ -21,27 +21,17 @@ app.get('/coronaPostList', (req, res) => { // db storage list
         });
   });
 
-app.use(rateLimit({
-    windowMs: 10 * 1000, // 10 seconds
-    max: 1
-}));
-
   // add error check
 app.get('/coronaPostList/search', (req, res) => {
-    let input = {content: req.query.queryString}
-    console.log(input);
+    let searchInput = {content: req.query.queryString}
+    console.log(searchInput);
     coronaPostList
-    .find(input)
+    .find(searchInput)
     .then(searchResults => {
         console.log(searchResults);
         res.json(searchResults)
     });
 });
-
-app.use(rateLimit({
-    windowMs: 10 * 1000, // 10 seconds
-    max: 1
-}));
 
 app.post('/coronaPostList', (req, res) => { // client to server this is what happens when an incoming post req happens to the server
     if (isValidCoronaPost(req.body)){
