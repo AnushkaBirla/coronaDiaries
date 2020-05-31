@@ -44,7 +44,7 @@ app.use(rateLimit({
 }));
 
 app.post('/coronaPostList', (req, res) => { // client to server this is what happens when an incoming post req happens to the server
-    if (isValidCoronaPost(req.body)){ 
+    if (isValidCoronaPost(req.body)){
         //insert into DB
         const coronaPost = {
             name: filter.clean(req.body.name.toString().trim()),
@@ -66,7 +66,7 @@ app.post('/coronaPostList', (req, res) => { // client to server this is what hap
   });
 
 function isValidCoronaPost(coronaPost) {
-    return coronaPost.name && coronaPost.name.toString().trim()  !== '' && 
+    return coronaPost.name && coronaPost.name.toString().trim()  !== '' &&
     coronaPost.content && coronaPost.content.toString().trim() !== '';
     created: new Date()
 }

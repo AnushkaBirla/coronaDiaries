@@ -69,7 +69,7 @@ search.addEventListener('submit', (event) => {
             div.appendChild(contents);
             div.appendChild(date);
             div.appendChild(document.createElement('hr'));
-            
+
             coronaPostListElement.appendChild(div);
       search.reset();
       
