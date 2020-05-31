@@ -36,11 +36,13 @@ app.get('/mews', (req, res) => { // db storage list
         });
   });
 
+  
   app.get('/mews/search', (req, res) => {
+      let input = {content: req.query.queryString}
+      console.log(input);
       mews
-        .find({content: req.query.queryString})
+        .find(input)
         .then(searchResults => {
-            console.log(searchResults);
             res.json(searchResults)
         });
   });

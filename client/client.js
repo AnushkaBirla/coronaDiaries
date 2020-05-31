@@ -37,8 +37,9 @@ search.addEventListener('submit', (event) => {
     const formDataSearch = new FormData(search);
     const searchParameter = formDataSearch.get('search');
 
-    let params = `?queryString=${JSON.stringify(searchParameter)}`;
+    let params = `?queryString=${searchParameter}`;
     searchURL = API_URL_SEARCH + params;
+    console.log (searchURL);
     //add search input to
     fetch(searchURL, {
         method: 'GET',
