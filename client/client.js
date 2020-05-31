@@ -3,6 +3,7 @@
 const submission = document.querySelector('#submission');
 const search = document.querySelector('#search');
 const API_URL = 'http://localhost:5000/mews';
+const API_URL_SEARCH = 'http://localhost:5000/mews/search';
 const mewsElement = document.querySelector('.mews'); //defined as a class of mews in index.html
 
 listAllMews();
@@ -33,19 +34,21 @@ submission.addEventListener('submit', (event) => {
 
 search.addEventListener('submit', (event) => {
     event.preventDefault();
-    const formData = new FormData(search);
-    const search = formData.get('search');
+    const formDataSearch = new FormData(search);
+    const searchParameter = formDataSearch.get('search');
 
-    fetch(API_URL + '/search', {
+    let params = `?queryString=${JSON.stringify(searchParameter)}`;
+    searchURL = API_URL_SEARCH + params;
+    //add search input to
+    fetch(searchURL, {
         method: 'GET',
-        body: JSON.stringify(search),
         headers: {
             'content-type': 'application/json'
         }
     }).then(response => response.json())  
-      .then(searchInput => {
+      .then(searchParameter => {
       search.reset();
-      console.log(searchInput);
+      console.log(searchParameter);
       
   });
 });

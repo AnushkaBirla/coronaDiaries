@@ -36,6 +36,15 @@ app.get('/mews', (req, res) => { // db storage list
         });
   });
 
+  app.get('/mews/search', (req, res) => {
+      mews
+        .find({content: req.query.queryString})
+        .then(searchResults => {
+            console.log(searchResults);
+            res.json(searchResults)
+        });
+  });
+
 function isValidMew(mew) {
     return mew.name && mew.name.toString().trim()  !== '' && 
     mew.content && mew.content.toString().trim() !== '';
