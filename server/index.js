@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const monk = require('monk');
 const Filter = require('bad-words');
-//const rateLimit = require('express-rate-limit');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
@@ -22,17 +22,16 @@ app.get('/coronaPostList', (req, res) => { // db storage list
   });
 
   // add error check
-  app.get('/coronaPostList/search', (req, res) => {
-      let input = {content: req.query.queryString}
-      console.log(input);
-      coronaPostList
-        .find(input)
-        .then(searchResults => {
-            console.log(searchResults);
-            res.json(searchResults)
-        });
-  });
-
+app.get('/coronaPostList/search', (req, res) => {
+    let searchInput = {content: req.query.queryString}
+    console.log(searchInput);
+    coronaPostList
+    .find(searchInput)
+    .then(searchResults => {
+        console.log(searchResults);
+        res.json(searchResults)
+    });
+});
 
 app.post('/coronaPostList', (req, res) => { // client to server this is what happens when an incoming post req happens to the server
     if (isValidCoronaPost(req.body)){
