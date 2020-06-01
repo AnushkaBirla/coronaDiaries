@@ -1,20 +1,18 @@
-//const form = document.querySelector('form'); // grabbing an element on the page
-// why queryselector, just convenient - look into others like on click
 const submission = document.querySelector('#submission');
 const search = document.querySelector('#search');
 const API_URL = 'http://localhost:5000/coronaPostList';
 const API_URL_SEARCH = 'http://localhost:5000/coronaPostList/search';
 const coronaPostListElement = document.querySelector('.coronaPostList'); //defined as a class of coronaPostList in index.html
 
-listAllcoronaPostList();
+listAllCoronaPostList();
 
-submission.addEventListener('submit', (event) => {
+submission.addEventListener('submit', (event) => { //event handler for submission form
     event.preventDefault();
     const formDataSubmission = new FormData(submission);
     const name = formDataSubmission.get('name');
     const content = formDataSubmission.get('content');
 
-    const coronaPost = { // named CoronaPost to keep distinct from post requests & avoid confusion
+    const coronaPost = { // named coronaPost to keep distinct from post requests & avoid confusion
         name,
         content
     };
@@ -34,7 +32,7 @@ submission.addEventListener('submit', (event) => {
       }).then(response => response.json())
         .then(createdCoronaPost => {
           submission.reset();
-          listAllcoronaPostList();
+          listAllCoronaPostList();
         });
     }
 });
@@ -43,11 +41,10 @@ search.addEventListener('submit', (event) => {
     event.preventDefault();
     const formDataSearch = new FormData(search);
     const searchParameter = formDataSearch.get('search');
-
-    let params = `?queryString=${searchParameter}`;
+    const params = `?queryString=${searchParameter}`;
     const searchURL = API_URL_SEARCH + params;
-
     const input = { "Search": searchParameter };
+
     if(isNotEmpty(input)) {
       fetch(searchURL, {
         method: 'GET',
@@ -68,9 +65,9 @@ search.addEventListener('submit', (event) => {
     }
 });
 
-function listAllcoronaPostList(){ //making a get req
+function listAllCoronaPostList(){ //making a get req
     coronaPostListElement.innerHTML = ''; //removes set of html dom elements
-    fetch(API_URL) //lel whats going on here - watch vid, calling app.get
+    fetch(API_URL)
         .then(response => response.json())
         .then(coronaPostList => {
             displayPosts(coronaPostList);
@@ -120,7 +117,7 @@ function displayEmptyFeed() {
  **/
 function isNotEmpty(inputs) {
   for (const inputFieldName in inputs) {
-    if (inputs[inputFieldName] === "") {
+    if (inputs[inputFieldName].toString().trim() === "") {
       alert(`${inputFieldName} must be filled out`);
       return false;
     }
