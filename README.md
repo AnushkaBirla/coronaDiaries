@@ -19,16 +19,22 @@ Jest
 - Has a lot of general documentation 
 
 Monk
-- useful API for Node.js to interface with MongoDB, improves usability
+- Useful API for Node.js to interface with MongoDB, improves usability
 
 Express
-- popular Node.js middleware that is useful for defining different routes within the application, saves time and lines of code
+- Popular Node.js middleware that is useful for defining different routes within the application, saves time and lines of code
 
 
 # Installation Instructions
-- install Node.js
-- install MongoDB
-- clone this repository 
+- Install Node.js
+- Install MongoDB
+- Clone this repository 
+- Run npm install
+- Run this terminal command: npm init -y
+- Run this terminal command: npm install express morgan
+
+
+- In a web browser, open 'localhost:8080'
 
 
 # Going Forward
