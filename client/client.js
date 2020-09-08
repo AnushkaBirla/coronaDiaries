@@ -3,6 +3,7 @@ const search = document.querySelector('#search');
 const API_URL = 'http://localhost:5000/coronaPostList';
 const API_URL_SEARCH = 'http://localhost:5000/coronaPostList/search';
 const coronaPostListElement = document.querySelector('.coronaPostList'); //defined as a class of coronaPostList in index.html
+//const helpers = require('./helpers.js');
 
 listAllCoronaPostList();
 
@@ -115,6 +116,7 @@ function displayEmptyFeed() {
  *  @param: inputs(object) and object containing the inputFieldName and value
  *  returns a boolean
  **/
+
 function isNotEmpty(inputs) {
   for (const inputFieldName in inputs) {
     if (inputs[inputFieldName].toString().trim() === "") {
@@ -124,3 +126,7 @@ function isNotEmpty(inputs) {
   } 
   return true;
 }
+
+
+//module.exports.isNotEmpty = isNotEmpty;
+
