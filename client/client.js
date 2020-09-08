@@ -121,6 +121,6 @@ function isNotEmpty(inputs) {
       alert(`${inputFieldName} must be filled out`);
       return false;
     }
-  }
+  } 
   return true;
 }
