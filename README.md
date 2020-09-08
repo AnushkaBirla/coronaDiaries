@@ -36,7 +36,7 @@ Express
 
 # Going Forward
 This is very much a work in progress! In the future I want to add the ability to:
-- mMke a user profile
+- Make a user profile
 - Authenticate
 - React and reply to posts
 - Upload images
